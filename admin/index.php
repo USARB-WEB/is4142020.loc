@@ -22,6 +22,13 @@
 
    <br>
    <? 
+   if($_GET['action'] === "delete" && $_GET['id']){
+        if(mysqli_query($link, "DELETE FROM students WHERE id = {$_GET['id']}")) {
+            echo "Student was deleted";
+        } else {
+            echo "Delete error";
+        }
+    }
 
     $result = mysqli_query($link, 
     "SELECT 
@@ -36,6 +43,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Age</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -44,6 +52,14 @@
                 <td><? echo $student['id'];?></td>
                 <td><? echo $student['name'];?></td>
                 <td><? echo $student['age'];?></td>
+                <td>
+                    <a href="update.php?id=<? echo $student['id'];?>">M</a>
+
+                    <a 
+                        href="index.php?action=delete&id=<? echo $student['id'];?>" 
+                        onclick="return confirm('Doriti sa stergeti?')"
+                    >X</a>
+                </td>
             </tr>
             <? }?>
         </tbody>
