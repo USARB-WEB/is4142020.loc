@@ -1,3 +1,8 @@
+<? 
+if(!isset($_SESSION)){
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +12,24 @@
 </head>
 <body>
    <?php
+
+    if($_GET['action'] === "logout") {
+        $_SESSION['user_logged'] = false;
+    }
+
+    if($_POST['username'] === "admin" && $_POST['password'] === "1234"){
+        $_SESSION['user_logged'] = true;
+    }
+
+   if(!$_SESSION['user_logged']){?>
+    <div style="text-align:center">
+    <form action="" method="post">
+        Username <input type="text" name="username"> <br>
+        Password <input type="password" name="password"> <br>
+        <input type="submit" value="Login">
+    </form>
+    </div>
+   <?} else {
    
    $link = mysqli_connect("127.0.0.1", "root", "root", "is41r2020");
    if(!$link){
@@ -16,7 +39,6 @@
    
    ?>
    <? include "menu.php"; ?>
-
    
    Lista de stdenti
 
@@ -64,5 +86,6 @@
             <? }?>
         </tbody>
     </table>
+    <?}?>
 </body>
 </html>
